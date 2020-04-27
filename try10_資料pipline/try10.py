@@ -1,6 +1,6 @@
 import tensorflow as tf 
 import matplotlib.pyplot as plt
-
+# https://www.tensorflow.org/api_docs/python/tf/data/Dataset
 
 def load_one_img(file_name):   ### file_name：Tensor("args_0:0", shape=(), dtype=string)
     img = tf.io.read_file(file_name) ### tf.io.read_file(filename,name=None)
