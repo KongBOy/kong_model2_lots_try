@@ -1,17 +1,17 @@
-import os 
+import os
 import tensorflow as tf
-import matplotlib.pyplot as plt 
+import matplotlib.pyplot as plt
 from step0_unet_util import method2
 from step1_data_pipline import get_dataset
 from step2_kong_model import Generator, Discriminator
 
 import time
 
-tf.keras.backend.set_floatx('float32') ### 這步非常非常重要！用了才可以加速！
+tf.keras.backend.set_floatx('float32')  ### 這步非常非常重要！用了才可以加速！
 
 
 def generator_loss(disc_generated_output, gen_output, target):
-    target = tf.cast(target,tf.float32)
+    target = tf.cast(target, tf.float32)
     LAMBDA = 100
 
     loss_object = tf.keras.losses.BinaryCrossentropy(from_logits=True)
@@ -38,7 +38,7 @@ def discriminator_loss(disc_real_output, disc_generated_output):
 
 #######################################################################################################################################
 @tf.function()
-def train_step(generator, discriminator,generator_optimizer, discriminator_optimizer, summary_writer, input_image, target, epoch):
+def train_step(generator, discriminator, generator_optimizer, discriminator_optimizer, summary_writer, input_image, target, epoch):
     with tf.GradientTape() as gen_tape, tf.GradientTape() as disc_tape:
         gen_output = generator(input_image, training=True)
 

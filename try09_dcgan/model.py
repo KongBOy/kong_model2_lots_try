@@ -1,21 +1,17 @@
-import glob
-import imageio
 import matplotlib.pyplot as plt
-import numpy as np
 import os
-import PIL
 import tensorflow as tf
 from tensorflow.keras import layers
 import time
 
 def make_generator_model():
     model = tf.keras.Sequential()
-    model.add(layers.Dense(7*7*256, use_bias=False, input_shape=(100,)))
+    model.add(layers.Dense(7 * 7 * 256, use_bias=False, input_shape=(100,)))
     model.add(layers.BatchNormalization())
     model.add(layers.LeakyReLU())
 
     model.add(layers.Reshape((7, 7, 256)))
-    assert model.output_shape == (None, 7, 7, 256) # Note: None is the batch size
+    assert model.output_shape == (None, 7, 7, 256)  # Note: None is the batch size
 
     model.add(layers.Conv2DTranspose(128, (5, 5), strides=(1, 1), padding='same', use_bias=False))
     assert model.output_shape == (None, 7, 7, 128)
@@ -77,10 +73,10 @@ def generate_and_save_images(model, epoch, test_input):
     # This is so all layers run in inference mode (batchnorm).
     predictions = model(test_input, training=False)
 
-    fig = plt.figure(figsize=(4,4))
+    plt.figure(figsize=(4, 4))
 
     for i in range(predictions.shape[0]):
-        plt.subplot(4, 4, i+1)
+        plt.subplot(4, 4, i + 1)
         plt.imshow(predictions[i, :, :, 0] * 127.5 + 127.5, cmap='gray')
         plt.axis('off')
 
@@ -120,8 +116,7 @@ def train(dataset, epochs):
         # Produce images for the GIF as we go
         # display.clear_output(wait=True)
         generate_and_save_images(generator,
-                                epoch + 1,
-                                seed)
+                                epoch + 1)
 
         # Save the model every 15 epochs
         if (epoch + 1) % 15 == 0:
@@ -132,16 +127,15 @@ def train(dataset, epochs):
     # Generate after the final epoch
     # display.clear_output(wait=True)
     generate_and_save_images(generator,
-                            epochs,
-                            seed)
+                            epochs)
 ##############################################################################################################################
 ##############################################################################################################################
 ##############################################################################################################################
 
-if(__name__=="__main__"):    
+if(__name__ == "__main__"):
     (train_images, train_labels), (_, _) = tf.keras.datasets.mnist.load_data()
     train_images = train_images.reshape(train_images.shape[0], 28, 28, 1).astype('float32')
-    train_images = (train_images - 127.5) / 127.5 # Normalize the images to [-1, 1]
+    train_images = (train_images - 127.5) / 127.5  # Normalize the images to [-1, 1]
     BUFFER_SIZE = 60000
     BATCH_SIZE = 256
     train_dataset = tf.data.Dataset.from_tensor_slices(train_images).shuffle(BUFFER_SIZE).batch(BATCH_SIZE)
@@ -154,7 +148,7 @@ if(__name__=="__main__"):
     generated_image = generator(noise, training=False)
 
     plt.imshow(generated_image[0, :, :, 0], cmap='gray')
-    
+
     ###########################################################################
     discriminator = make_discriminator_model()
     decision = discriminator(generated_image)

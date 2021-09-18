@@ -1,9 +1,9 @@
-import matplotlib.pyplot as plt 
+import matplotlib.pyplot as plt
 import cv2
-import matplotlib.pyplot as plt  
+import matplotlib.pyplot as plt
 
-img = cv2.imread("13.jpg")[...,::-1] ### rgb轉bgr
-cv2.imshow("img",img)
+img = cv2.imread("13.jpg")[..., ::-1]  ### rgb轉bgr
+cv2.imshow("img", img)
 cv2.waitKey(0)
 
 ### subplot的code-style
