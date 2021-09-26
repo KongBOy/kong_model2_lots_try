@@ -1,0 +1,4 @@
+shift + 右鍵 → 用管理員身分開啟cmd
+rmdir kong_model2 /s /q
+	/s 是 當目錄非空時也可刪除
+	/q 是 quiet， 不會問你 y/n 要不要刪除dir
