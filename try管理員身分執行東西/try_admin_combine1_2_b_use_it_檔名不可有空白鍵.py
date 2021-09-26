@@ -7,7 +7,7 @@ if(__name__ == "__main__"):
     import win32con, win32event, win32process
 
     if ctypes.windll.shell32.IsUserAnAdmin():  ### 如果是 Administrator 才可做以下的事情
-        ''' 
+        '''
         管理員身分執行的程式碼加到這裡
         '''
         print('I am elevating to admin privilege.')
