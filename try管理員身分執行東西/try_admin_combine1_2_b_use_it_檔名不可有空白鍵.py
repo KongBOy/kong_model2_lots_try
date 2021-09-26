@@ -15,6 +15,7 @@ if(__name__ == "__main__"):
         git_status = os.system("git clone https://github.com/KongBOy/kong_model2.git")
         if(git_status != 0 ): print("kong_model2 已存在,")
         os.chdir(f"{os.getcwd()}/kong_model2")
+        os.system("git pull")
         os.system("git submodule init")
         os.system("git submodule update")
         sys.exit()  ### 做完  Administrator 的事情 就可以把這個 terminal 關掉囉！
